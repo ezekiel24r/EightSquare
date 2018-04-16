@@ -30,7 +30,7 @@ public class Driver {
         space.aStarH2();
         //space.expandNode(root);
 
-        System.out.println("hi");
+        System.out.println("Total nodes created: " + space.totalNodes);
     }
 
 

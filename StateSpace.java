@@ -5,6 +5,7 @@ public class StateSpace {
     private ArrayList<BoardNode> frontierSet;
     private HashMap<String, String> exploredSet;
     private boolean solution;
+    public int totalNodes;
 
     StateSpace(BoardNode root){
         frontierSet = new ArrayList<>();
@@ -12,6 +13,7 @@ public class StateSpace {
         solution = false;
 
         frontierSet.add(root);
+        totalNodes = 1;
     }
 
     private void addToFrontier(BoardNode in) {
@@ -24,6 +26,7 @@ public class StateSpace {
             }
         }
         frontierSet.add(in);
+        totalNodes+=1;
     }
 
     public void aStarH1(){
@@ -73,7 +76,7 @@ public class StateSpace {
                 node.h1 = (short) H1.run(node.board);
             }
             if (node.h1 == 0) {
-                System.out.println("solution!");
+                System.out.println("solution found at depth: " + node.depth);
                 solution = true;
             }
         }
@@ -85,7 +88,7 @@ public class StateSpace {
                 node.h2 = (short) H2.run(node.board);
             }
             if (node.h2 == 0) {
-                System.out.println("solution!");
+                System.out.println("solution found at depth: " + node.depth);
                 solution = true;
             }
         }
@@ -107,6 +110,7 @@ public class StateSpace {
 
                  result = RenselTools.swap(in.board, 0, 3);
                  addToFrontier(new BoardNode(result,d));
+
 
                 break;
             case 1:
@@ -136,6 +140,7 @@ public class StateSpace {
                 result = RenselTools.swap(in.board, 2, 5);
                 addToFrontier(new BoardNode(result,d));
 
+
                 break;
             case 3:
                 result = RenselTools.swap(in.board, 3, 0);
@@ -150,6 +155,7 @@ public class StateSpace {
 
                 result = RenselTools.swap(in.board, 3, 6);
                 addToFrontier(new BoardNode(result,d));
+
 
                 break;
             case 4:
@@ -170,6 +176,7 @@ public class StateSpace {
                 result = RenselTools.swap(in.board, 4, 7);
                 addToFrontier(new BoardNode(result,d));
 
+
                 break;
             case 5:
                 result = RenselTools.swap(in.board, 5, 2);
@@ -185,6 +192,7 @@ public class StateSpace {
                 result = RenselTools.swap(in.board, 5, 8);
                 addToFrontier(new BoardNode(result,d));
 
+
                 break;
             case 6:
                 result = RenselTools.swap(in.board, 6, 3);
@@ -194,6 +202,7 @@ public class StateSpace {
 
                 result = RenselTools.swap(in.board, 6, 7);
                 addToFrontier(new BoardNode(result,d));
+
 
                 break;
             case 7:
@@ -209,6 +218,8 @@ public class StateSpace {
 
                 result = RenselTools.swap(in.board, 7, 8);
                 addToFrontier(new BoardNode(result,d));
+
+
                 break;
             case 8:
                 result = RenselTools.swap(in.board, 8, 5);
@@ -218,6 +229,8 @@ public class StateSpace {
 
                 result = RenselTools.swap(in.board, 8, 7);
                 addToFrontier(new BoardNode(result,d));
+
+
                 break;
         }
         exploredSet.put(in.board, "");
