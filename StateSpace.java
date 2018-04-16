@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StateSpace {
-    ArrayList<BoardNode> frontierSet;
-    HashMap<String, String> exploredSet;
-    boolean solution;
+    private ArrayList<BoardNode> frontierSet;
+    private HashMap<String, String> exploredSet;
+    private boolean solution;
 
     StateSpace(BoardNode root){
         frontierSet = new ArrayList<>();
@@ -14,7 +14,7 @@ public class StateSpace {
         frontierSet.add(root);
     }
 
-    public void addToFrontier(BoardNode in) {
+    private void addToFrontier(BoardNode in) {
         if(!exploredSet.isEmpty()) {
             for (int i = 0; i < exploredSet.size(); i++) {
                 if (exploredSet.containsKey(in.board)) {
@@ -43,7 +43,7 @@ public class StateSpace {
     }
 
 
-    public int getMinH1(){
+    private int getMinH1(){
         int minIndex = 0;
         int minH1 = frontierSet.get(0).h1 + frontierSet.get(0).depth;
         for(int i=0; i<frontierSet.size(); i++){
@@ -55,7 +55,7 @@ public class StateSpace {
         return minIndex;
     }
 
-    public int getMinH2(){
+    private int getMinH2(){
         int minIndex = 0;
         int minH2 = frontierSet.get(0).h2 + frontierSet.get(0).depth;
         for(int i=0; i<frontierSet.size(); i++){
@@ -67,26 +67,24 @@ public class StateSpace {
         return minIndex;
     }
 
-    public void calcH1(){
-        for(int i=0; i<frontierSet.size(); i++){
-            BoardNode node = frontierSet.get(i);
-            if(node.h1 == -1) {
+    private void calcH1(){
+        for (BoardNode node : frontierSet) {
+            if (node.h1 == -1) {
                 node.h1 = (short) H1.run(node.board);
             }
-            if(node.h1 == 0){
+            if (node.h1 == 0) {
                 System.out.println("solution!");
                 solution = true;
             }
         }
     }
 
-    public void calcH2(){
-        for(int i=0; i<frontierSet.size(); i++){
-            BoardNode node = frontierSet.get(i);
-            if(node.h2 == -1) {
+    private void calcH2(){
+        for (BoardNode node : frontierSet) {
+            if (node.h2 == -1) {
                 node.h2 = (short) H2.run(node.board);
             }
-            if(node.h2 == 0){
+            if (node.h2 == 0) {
                 System.out.println("solution!");
                 solution = true;
             }
@@ -94,7 +92,7 @@ public class StateSpace {
     }
 
 
-    public void expandNode(BoardNode in){
+    private void expandNode(BoardNode in){
 
         short d = (short)(in.depth + 1);
         String result = "";

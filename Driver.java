@@ -1,6 +1,6 @@
 public class Driver {
 
-    public static boolean isSolvable(String in){
+    private static boolean isSolvable(String in){
 
         char [] input = in.toCharArray();
         int inversions = 0;
@@ -11,11 +11,7 @@ public class Driver {
                 }
             }
         }
-        if((inversions % 2) == 0){
-            return true;
-        }
-        else
-            return false;
+        return (inversions % 2) == 0;
     }
 
 

@@ -1,6 +1,6 @@
 public class H2 {
 
-    static String [] key = {
+    private static String [] key = {
             "012123234",
             "101212323",
             "210321432",
