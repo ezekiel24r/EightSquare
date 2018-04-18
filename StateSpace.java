@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class StateSpace {
     private PriorityQueue<BoardNode> frontierSet;
@@ -31,6 +32,7 @@ public class StateSpace {
         if (in.h2 == 0) {
             System.out.println("solution found at depth: " + in.depth);
             solution = true;
+            printPath(in);
         }
         frontierSet.add(in);
         totalNodes+=1;
@@ -50,6 +52,7 @@ public class StateSpace {
 
 
         }
+
     }
 
 
@@ -242,5 +245,21 @@ public class StateSpace {
         }
         exploredSet.put(in.board, "");
         frontierSet.remove(in);
+    }
+
+    void printPath(BoardNode in){
+        Stack<BoardNode> path= new Stack<>();
+
+        while(true){
+            path.push(in);
+            if(in.parent != null){
+                in = in.parent;
+            }
+            else break;
+        }
+
+        while(!path.isEmpty()){
+            path.pop().printBoard();
+        }
     }
 }

@@ -12,6 +12,7 @@ public class BoardNode implements Comparable<BoardNode> {
         h1 = -1;
         h2 = -1;
         zeroPos = findZero();
+        parent = null;
     }
 
     BoardNode(String input, BoardNode p){
