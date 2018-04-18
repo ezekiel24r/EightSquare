@@ -6,7 +6,7 @@ public class Driver {
         int inversions = 0;
         for(int i=0; i<9; i++){
             for(int j=(i+1); j<9; j++){
-                if(input[j]<input[i]){
+                if((input[j]<input[i]) && (input[i] != 0)){
                     inversions++;
                 }
             }
