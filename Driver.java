@@ -17,7 +17,7 @@ public class Driver {
 
 
     public static void main(String [] args){
-        String initState = "018652374";
+        String initState = "158634072";
         if(!isSolvable(initState)){
             System.out.println("Input is not solvable");
             return;

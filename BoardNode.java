@@ -1,9 +1,10 @@
-public class BoardNode {
+public class BoardNode implements Comparable<BoardNode> {
     String board;
     short zeroPos;
     short depth;
     short h1;
     short h2;
+    BoardNode parent;
 
     BoardNode(String input){
         board = input;
@@ -13,14 +14,24 @@ public class BoardNode {
         zeroPos = findZero();
     }
 
-    BoardNode(String input, short d){
+    BoardNode(String input, BoardNode p){
         board = input;
-        depth = d;
+        depth = (short)(p.depth+1);
         h1 = -1;
         h2 = -1;
         zeroPos = findZero();
+        parent = p;
     }
 
+    public int compareTo(BoardNode in){
+        if((in.depth + in.h2) > (this.depth + this.h2 )){
+            return -1;
+        }
+        else if((in.depth + in.h2) < (this.depth + this.h2)){
+            return 1;
+        }
+        else return 0;
+    }
 
 
     public void printBoard(){
