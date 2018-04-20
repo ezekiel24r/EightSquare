@@ -6,23 +6,24 @@ public class Driver {
         int inversions = 0;
         for(int i=0; i<9; i++){
             //skip zero
-            if(input[i] == 0){
+            if(input[i] == '0'){
                 continue;
             }
             for(int j=(i+1); j<9; j++){
                 //count inversion and don't count zero.
-                if((input[j]<input[i]) && (input[j] != 0)){
+                if((input[j]<input[i]) && (input[j] != '0')){
                     inversions++;
                 }
             }
         }
+        System.out.println("Inversions is equal to: " + inversions);
         return (inversions % 2) == 0;
     }
 
 
 
     public static void main(String [] args){
-        String initState = "158634072";
+        String initState = "045821367";
         if(!isSolvable(initState)){
             System.out.println("Input is not solvable");
             return;
