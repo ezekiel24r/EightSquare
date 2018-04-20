@@ -31,8 +31,11 @@ public class StateSpace {
         in.h2 = (short)H2.run(in.board);
         if (in.h2 == 0) {
             System.out.println("solution found at depth: " + in.depth);
+            //if(in.depth != 20){
+             //   System.out.println("wrong");
+            //}
             solution = true;
-            printPath(in);
+            //printPath(in);
         }
         frontierSet.add(in);
         totalNodes+=1;
@@ -40,7 +43,7 @@ public class StateSpace {
 
     public void aStarH1(){
         while (!solution){
-            calcH1();
+            //calcH1();
             expandNode(frontierSet.peek());
         }
     }
