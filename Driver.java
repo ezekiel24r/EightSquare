@@ -5,8 +5,13 @@ public class Driver {
         char [] input = in.toCharArray();
         int inversions = 0;
         for(int i=0; i<9; i++){
+            //skip zero
+            if(input[i] == 0){
+                continue;
+            }
             for(int j=(i+1); j<9; j++){
-                if((input[j]<input[i]) && (input[i] != 0)){
+                //count inversion and don't count zero.
+                if((input[j]<input[i]) && (input[j] != 0)){
                     inversions++;
                 }
             }

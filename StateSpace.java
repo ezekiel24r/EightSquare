@@ -247,7 +247,7 @@ public class StateSpace {
         frontierSet.remove(in);
     }
 
-    void printPath(BoardNode in){
+    private void printPath(BoardNode in){
         Stack<BoardNode> path= new Stack<>();
 
         while(true){
