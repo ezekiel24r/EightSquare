@@ -2,8 +2,8 @@ public class BoardNode implements Comparable<BoardNode> {
     String board;
     short zeroPos;
     short depth;
-    short h1;
     short h2;
+    short h1;
     BoardNode parent;
 
     BoardNode(String input){
@@ -24,14 +24,26 @@ public class BoardNode implements Comparable<BoardNode> {
         parent = p;
     }
 
+
+    /*
+        The CompareTo function exists so that the priorityqueue can be ordered according
+        to the A* f function.
+     */
     public int compareTo(BoardNode in){
-        if((in.depth + in.h2) > (this.depth + this.h2 )){
-            return -1;
+        if(h1 == -1) {
+            if ((in.depth + in.h2) > (this.depth + this.h2)) {
+                return -1;
+            } else if ((in.depth + in.h2) < (this.depth + this.h2)) {
+                return 1;
+            } else return 0;
         }
-        else if((in.depth + in.h2) < (this.depth + this.h2)){
-            return 1;
+        else{
+            if ((in.depth + in.h1) > (this.depth + this.h1)) {
+                return -1;
+            } else if ((in.depth + in.h1) < (this.depth + this.h1)) {
+                return 1;
+            } else return 0;
         }
-        else return 0;
     }
 
 

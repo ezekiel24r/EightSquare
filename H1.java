@@ -6,6 +6,7 @@ public class H1 {
                 result++;
             }
         }
+        //System.out.println(result);
         return result;
     }
 }

@@ -1,14 +1,34 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Time;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class Driver {
 
+    /*
+        isSolvable() tests input strings to see if they are valid strings and possible to be solved
+     */
     private static boolean isSolvable(String in){
-
+        //if the string is not of length 9, then it is not a puzzle
+        if(in.length() != 9){
+            return false;
+        }
+        //the next section determines whether the input is just a scrambled puzzle
+        ArrayList<Character> test = new ArrayList<>();
+        for(int i=0; i<9; i++){
+            //test.add((char)(i+48));
+            test.add(in.charAt(i));
+        }
+        Collections.sort(test);
+        StringBuilder strTest = new StringBuilder();
+        for(int i=0; i<9; i++){
+            strTest.append(test.get(i));
+        }
+        if(!strTest.toString().equals("012345678")){
+            return false;
+        }
+        //this section counts the number of inversions, while skipping zero.
         char [] input = in.toCharArray();
         int inversions = 0;
         for(int i=0; i<9; i++){
@@ -29,37 +49,238 @@ public class Driver {
 
 
 
-    public static void main(String [] args) throws FileNotFoundException {
+    public static void main(String [] args) throws FileNotFoundException, UnsupportedEncodingException {
+        System.out.println("Enter 1 to test an input string, or 2 to test a random puzzle");
+
+        Scanner scan = new Scanner(System.in);
+
+        String choice = scan.nextLine();
+
+        String input = "";
+
+        switch (choice) {
+            case "1":
+                while (true) {
+                    System.out.print("Enter input string: ");
+                    input = scan.nextLine();
+                    input = RenselTools.cleanString(input);
+                    if (!isSolvable(input)) {
+                        System.out.println("This input is not solvable");
+                    } else break;
+                }
+                System.out.print("\nUse h1 or h2? :");
+                choice = scan.nextLine();
+                if (choice.contains("h1")) {
+                    BoardNode root = new BoardNode(input);
+                    StateSpaceH1 space = new StateSpaceH1(root);
+                    //root.printBoard();
+                    //space.aStarH1();
+                    space.aStar();
+
+                } else if (choice.contains("h2")) {
+                    BoardNode root = new BoardNode(input);
+                    StateSpaceH2 space = new StateSpaceH2(root);
+                    //root.printBoard();
+                    //space.aStarH1();
+                    space.aStar();
+
+                } else {
+                    System.out.println("Invalid choice");
+                }
+                break;
+            case "2":
+                ArrayList randIn = new ArrayList<Integer>();
+                for (int i = 0; i < 9; i++) {
+                    randIn.add(i);
+                }
+                StringBuilder str;
+                do {
+                    str = new StringBuilder();
+                    Collections.shuffle(randIn);
+                    for (int i = 0; i < 9; i++) {
+                        str.append(randIn.get(i));
+                    }
+                    System.out.println("Random string generated = " + str.toString());
+                } while (!isSolvable(str.toString()));
 
 
-        ArrayList randIn = new ArrayList<Integer>();
-        for(int i = 0; i<9; i++){
-            randIn.add(i);
+                System.out.println("This puzzle is solvable");
+
+                System.out.print("\nUse h1 or h2? :");
+                choice = scan.nextLine();
+
+                if (choice.contains("h1")) {
+                    BoardNode root = new BoardNode(str.toString());
+                    StateSpaceH1 space = new StateSpaceH1(root);
+                    //root.printBoard();
+
+                    space.aStar();
+
+                } else if (choice.contains("h2")) {
+                    BoardNode root = new BoardNode(str.toString());
+                    StateSpaceH2 space = new StateSpaceH2(root);
+                    //root.printBoard();
+
+                    space.aStar();
+
+                } else {
+                    System.out.println("Invalid choice");
+                }
+
+                break;
+
+            case "500h1":
+                long timeSum;
+                long initTime, totalTime;
+                int tempDepth;
+                PrintWriter out = new PrintWriter("output500H1", "UTF-8");
+                for (int i = 0; i < 500; i++) {
+
+
+                    ArrayList in = new ArrayList<Integer>();
+                    for (int j = 0; j < 9; j++) {
+                        in.add(j);
+                    }
+                    StringBuilder strIn;
+                    do {
+                        strIn = new StringBuilder();
+                        Collections.shuffle(in);
+                        for (int j = 0; j < 9; j++) {
+                            strIn.append(in.get(j));
+                        }
+                        //System.out.println("Random string generated = " + strIn.toString());
+                    } while (!isSolvable(strIn.toString()));
+
+                    initTime = System.nanoTime();
+
+
+                    //System.out.println("This puzzle is solvable");
+
+
+                    BoardNode root = new BoardNode(strIn.toString());
+                    StateSpaceH2 space = new StateSpaceH2(root);
+                    //root.printBoard();
+
+                    tempDepth = space.aStar();
+                    totalTime = (System.nanoTime()) - initTime;
+
+                    out.println(tempDepth + "," + totalTime);
+
+                }
+
+                out.close();
+
+                break;
+
+            case "testh1":
+                testH1();
+                break;
+
+
+            case "testh2":
+                testH2();
+
+                break;
+
+
+            default:
+                System.out.println("Invalid choice");
+
         }
-        StringBuilder str;
-        do {
-            str = new StringBuilder();
-            Collections.shuffle(randIn);
-            for(int i = 0; i < 9; i++){
-                str.append(randIn.get(i));
+    }
+
+    static void testH1() throws FileNotFoundException, UnsupportedEncodingException {
+
+        long timeSum;
+        long initTime, totalTime;
+        int tempDepth;
+        PrintWriter out = new PrintWriter("outputH1500.csv", "UTF-8");
+        for(int i=0; i<500;i++) {
+
+
+            ArrayList in = new ArrayList<Integer>();
+            for (int j = 0; j < 9; j++) {
+                in.add(j);
             }
-        }while(!isSolvable(str.toString()));
+            StringBuilder strIn;
+            do {
+                strIn = new StringBuilder();
+                Collections.shuffle(in);
+                for (int j = 0; j < 9; j++) {
+                    strIn.append(in.get(j));
+                }
+                //System.out.println("Random string generated = " + strIn.toString());
+            } while (!isSolvable(strIn.toString()));
+
+            initTime = System.nanoTime() ;
+
+            //System.out.println("This puzzle is solvable");
 
 
-        System.out.println(str.toString());
+            BoardNode root = new BoardNode(strIn.toString());
+            StateSpaceH1 space = new StateSpaceH1(root);
+            //root.printBoard();
+
+            tempDepth = space.aStar();
+            totalTime = (System.nanoTime() ) - initTime;
+
+            out.println(tempDepth + "," + totalTime + "," + space.totalNodes);
+
+
+        }
+
+        out.close();
+
+
+    }
 
 
 
+        static void testH2() throws FileNotFoundException, UnsupportedEncodingException {
 
-        BoardNode root = new BoardNode(str.toString());
-        StateSpace space = new StateSpace(root);
-        //root.printBoard();
-        //space.aStarH1();
-        space.aStarH2();
-        //space.expandNode(root);
+                long timeSum;
+                long initTime, totalTime;
+                int tempDepth;
+                PrintWriter out = new PrintWriter("outputH21000.csv", "UTF-8");
+                for(int i=0; i<1000;i++) {
 
-        System.out.println("Total nodes created: " + space.totalNodes);
 
+                    ArrayList in = new ArrayList<Integer>();
+                    for (int j = 0; j < 9; j++) {
+                        in.add(j);
+                    }
+                    StringBuilder strIn;
+                    do {
+                        strIn = new StringBuilder();
+                        Collections.shuffle(in);
+                        for (int j = 0; j < 9; j++) {
+                            strIn.append(in.get(j));
+                        }
+                        //System.out.println("Random string generated = " + strIn.toString());
+                    } while (!isSolvable(strIn.toString()));
+
+                    initTime = System.nanoTime() ;
+
+
+                    //System.out.println("This puzzle is solvable");
+
+
+                    BoardNode root = new BoardNode(strIn.toString());
+                    StateSpaceH2 space = new StateSpaceH2(root);
+                    //root.printBoard();
+
+                    tempDepth = space.aStar();
+                    totalTime = (System.nanoTime() ) - initTime;
+
+                    out.println(tempDepth + "," + totalTime + "," + space.totalNodes);
+
+
+                }
+
+                out.close();
+
+
+        }
 
 
 
@@ -80,7 +301,7 @@ public class Driver {
             }
 
             BoardNode root = new BoardNode(initState);
-            StateSpace space = new StateSpace(root);
+            StateSpaceH2 space = new StateSpaceH2(root);
             //root.printBoard();
             //space.aStarH1();
             space.aStarH2();
@@ -94,4 +315,3 @@ public class Driver {
     }
 
 
-}

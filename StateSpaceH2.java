@@ -1,21 +1,21 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
-public class StateSpace {
+public class StateSpaceH2 {
     private PriorityQueue<BoardNode> frontierSet;
     //private ArrayList<BoardNode> frontierSet;
     private HashMap<String, String> exploredSet;
     private boolean solution;
     public int totalNodes;
 
-    StateSpace(BoardNode root){
+    StateSpaceH2(BoardNode root){
         frontierSet = new PriorityQueue<>();
         exploredSet = new HashMap<>();
         solution = false;
 
-        frontierSet.add(root);
+        addToFrontier(root);
+        //frontierSet.add(root);
         totalNodes = 1;
     }
 
@@ -30,7 +30,7 @@ public class StateSpace {
         }
         in.h2 = (short)H2.run(in.board);
         if (in.h2 == 0) {
-            System.out.println("solution found at depth: " + in.depth);
+            //System.out.println("solution found at depth: " + in.depth);
             //if(in.depth != 20){
              //   System.out.println("wrong");
             //}
@@ -41,30 +41,26 @@ public class StateSpace {
         totalNodes+=1;
     }
 
-    public void aStarH1(){
-        while (!solution){
-            //calcH1();
-            expandNode(frontierSet.peek());
-        }
-    }
 
-    public void aStarH2(){
+    public int aStar(){
         while (!solution){
             //calcH2();
-            expandNode(frontierSet.peek());
+            expandNodeH2(frontierSet.peek());
 
 
         }
+        //System.out.println(frontierSet.peek().depth);
+        return frontierSet.peek().depth;
 
     }
 
 
     /*private int getMinH1(){
         int minIndex = 0;
-        int minH1 = frontierSet.get(0).h1 + frontierSet.get(0).depth;
+        int minH1 = frontierSet.get(0).h2 + frontierSet.get(0).depth;
         for(int i=0; i<frontierSet.size(); i++){
-            if((frontierSet.get(i).h1 + frontierSet.get(i).depth) < minH1){
-                minH1 = (frontierSet.get(i).h1 + frontierSet.get(i).depth);
+            if((frontierSet.get(i).h2 + frontierSet.get(i).depth) < minH1){
+                minH1 = (frontierSet.get(i).h2 + frontierSet.get(i).depth);
                 minIndex = i;
             }
         }
@@ -83,32 +79,9 @@ public class StateSpace {
         return minIndex;
     }*/
 
-    private void calcH1(){
-        for (BoardNode node : frontierSet) {
-            if (node.h1 == -1) {
-                node.h1 = (short) H1.run(node.board);
-            }
-            if (node.h1 == 0) {
-                System.out.println("solution found at depth: " + node.depth);
-                solution = true;
-            }
-        }
-    }
-
-    private void calcH2(){
-        for (BoardNode node : frontierSet) {
-            if (node.h2 == -1) {
-                node.h2 = (short) H2.run(node.board);
-            }
-            if (node.h2 == 0) {
-                System.out.println("solution found at depth: " + node.depth);
-                solution = true;
-            }
-        }
-    }
 
 
-    private void expandNode(BoardNode in){
+    private void expandNodeH2(BoardNode in){
 
         //short d = (short)(in.depth + 1);
         String result = "";
