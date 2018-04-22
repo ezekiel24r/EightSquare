@@ -1,3 +1,6 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+ */
 public class H2 {
 
     private static String [] key = {

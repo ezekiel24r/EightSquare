@@ -1,3 +1,6 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+ */
 public class BoardNode implements Comparable<BoardNode> {
     String board;
     short zeroPos;

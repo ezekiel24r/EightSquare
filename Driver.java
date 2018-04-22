@@ -1,3 +1,10 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+This is the Driver class for the EightSquare program. Some comments are left in for
+testing purposes.
+ */
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -60,6 +67,7 @@ public class Driver {
 
         switch (choice) {
             case "1":
+                //User enters input string
                 while (true) {
                     System.out.print("Enter input string: ");
                     input = scan.nextLine();
@@ -75,20 +83,21 @@ public class Driver {
                     StateSpaceH1 space = new StateSpaceH1(root);
                     //root.printBoard();
                     //space.aStarH1();
-                    space.aStar();
+                    System.out.println("Solution found at depth: " + space.aStar());
 
                 } else if (choice.contains("h2")) {
                     BoardNode root = new BoardNode(input);
                     StateSpaceH2 space = new StateSpaceH2(root);
                     //root.printBoard();
                     //space.aStarH1();
-                    space.aStar();
+                    System.out.println("Solution found at depth: " + space.aStar());
 
                 } else {
                     System.out.println("Invalid choice");
                 }
                 break;
             case "2":
+                //a solvable string is generated
                 ArrayList randIn = new ArrayList<Integer>();
                 for (int i = 0; i < 9; i++) {
                     randIn.add(i);
@@ -129,48 +138,6 @@ public class Driver {
 
                 break;
 
-            case "500h1":
-                long timeSum;
-                long initTime, totalTime;
-                int tempDepth;
-                PrintWriter out = new PrintWriter("output500H1", "UTF-8");
-                for (int i = 0; i < 500; i++) {
-
-
-                    ArrayList in = new ArrayList<Integer>();
-                    for (int j = 0; j < 9; j++) {
-                        in.add(j);
-                    }
-                    StringBuilder strIn;
-                    do {
-                        strIn = new StringBuilder();
-                        Collections.shuffle(in);
-                        for (int j = 0; j < 9; j++) {
-                            strIn.append(in.get(j));
-                        }
-                        //System.out.println("Random string generated = " + strIn.toString());
-                    } while (!isSolvable(strIn.toString()));
-
-                    initTime = System.nanoTime();
-
-
-                    //System.out.println("This puzzle is solvable");
-
-
-                    BoardNode root = new BoardNode(strIn.toString());
-                    StateSpaceH2 space = new StateSpaceH2(root);
-                    //root.printBoard();
-
-                    tempDepth = space.aStar();
-                    totalTime = (System.nanoTime()) - initTime;
-
-                    out.println(tempDepth + "," + totalTime);
-
-                }
-
-                out.close();
-
-                break;
 
             case "testh1":
                 testH1();
@@ -194,8 +161,8 @@ public class Driver {
         long timeSum;
         long initTime, totalTime;
         int tempDepth;
-        PrintWriter out = new PrintWriter("outputH1500.csv", "UTF-8");
-        for(int i=0; i<500;i++) {
+        PrintWriter out = new PrintWriter("outputH1100.csv", "UTF-8");
+        for(int i=0; i<100;i++) {
 
 
             ArrayList in = new ArrayList<Integer>();

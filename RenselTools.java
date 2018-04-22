@@ -1,3 +1,6 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+ */
 public class RenselTools {
     public static String swap(String in, int pos1, int pos2){
         StringBuilder str = new StringBuilder(in);

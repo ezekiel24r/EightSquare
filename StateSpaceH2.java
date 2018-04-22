@@ -1,3 +1,6 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+ */
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -35,53 +38,23 @@ public class StateSpaceH2 {
              //   System.out.println("wrong");
             //}
             solution = true;
-            //printPath(in);
+            printPath(in);
         }
         frontierSet.add(in);
         totalNodes+=1;
     }
 
-
     public int aStar(){
         while (!solution){
             //calcH2();
-            expandNodeH2(frontierSet.peek());
-
-
+            expandNode(frontierSet.peek());
         }
-        //System.out.println(frontierSet.peek().depth);
         return frontierSet.peek().depth;
 
     }
 
 
-    /*private int getMinH1(){
-        int minIndex = 0;
-        int minH1 = frontierSet.get(0).h2 + frontierSet.get(0).depth;
-        for(int i=0; i<frontierSet.size(); i++){
-            if((frontierSet.get(i).h2 + frontierSet.get(i).depth) < minH1){
-                minH1 = (frontierSet.get(i).h2 + frontierSet.get(i).depth);
-                minIndex = i;
-            }
-        }
-        return minIndex;
-    }
-
-    private int getMinH2(){
-        int minIndex = 0;
-        int minH2 = frontierSet.get(0).h2 + frontierSet.get(0).depth;
-        for(int i=0; i<frontierSet.size(); i++){
-            if((frontierSet.get(i).h2 + frontierSet.get(i).depth) < minH2){
-                minH2 = (frontierSet.get(i).h2 + frontierSet.get(i).depth);
-                minIndex = i;
-            }
-        }
-        return minIndex;
-    }*/
-
-
-
-    private void expandNodeH2(BoardNode in){
+    private void expandNode(BoardNode in){
 
         //short d = (short)(in.depth + 1);
         String result = "";

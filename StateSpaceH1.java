@@ -1,3 +1,6 @@
+/*
+Eric Rensel - CS420 - 4/22/2018
+ */
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -35,7 +38,7 @@ public class StateSpaceH1 {
              //   System.out.println("wrong");
             //}
             solution = true;
-            //printPath(in);
+            printPath(in);
         }
         frontierSet.add(in);
         totalNodes+=1;
@@ -44,13 +47,13 @@ public class StateSpaceH1 {
     public int aStar(){
         while (!solution){
             //calcH1();
-            expandNodeH1(frontierSet.peek());
+            expandNode(frontierSet.peek());
         }
         return frontierSet.peek().depth;
     }
 
 
-    private void expandNodeH1(BoardNode in){
+    private void expandNode(BoardNode in){
 
         //short d = (short)(in.depth + 1);
         String result = "";
