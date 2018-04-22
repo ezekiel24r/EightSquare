@@ -123,14 +123,14 @@ public class Driver {
                     StateSpaceH1 space = new StateSpaceH1(root);
                     //root.printBoard();
 
-                    space.aStar();
+                    System.out.println("Solution found at depth: " + space.aStar());;
 
                 } else if (choice.contains("h2")) {
                     BoardNode root = new BoardNode(str.toString());
                     StateSpaceH2 space = new StateSpaceH2(root);
                     //root.printBoard();
 
-                    space.aStar();
+                    System.out.println("Solution found at depth: " + space.aStar());
 
                 } else {
                     System.out.println("Invalid choice");
